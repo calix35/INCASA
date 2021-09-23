@@ -60,7 +60,7 @@ const HomePalero = ({ navigation }) => {
       <Tab.Screen name="Operador" component={Operator} />
       <Tab.Screen name="Cerrar Sesión"
         options={{
-          tabBarLabel: ({ color, size }) => (<Text style={{ color: 'tomato', fontSize: 11, bottom: 2 }}>Cerrar Sesión</Text>),
+          tabBarLabel: ({ color, size }) => (<Text style={{ color: 'tomato', backgroundColor:'transparent', marginLeft: 20, marginTop: 3, fontSize: 13, textAlign: 'center' }}>Cerrar Sesión</Text>),
         }}
         listeners={{
             tabPress: e => {

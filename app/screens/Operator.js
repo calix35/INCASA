@@ -75,29 +75,56 @@ const Materials = ({ navigation, route }) => {
 
     renderItem = ({item, index}) => {        
         return (
-            <ListItem
-                button={true}
+            <ListItem.Accordion
+                // button={true}
                 roundAvatar
                 bottomDivider={true}                
-                containerStyle={index==0?{backgroundColor:"rgba(24, 30, 51,0.2)"}:{}}
-            >
-                <Avatar
+                // containerStyle={index==0?{backgroundColor:"rgba(0, 0, 255,0.4)"}:{}}
+                icon={<Icon name={'truck'} size={20} />}
+                content={
+                    <>
+                    <Avatar
                     rounded
                     source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' }}
                     title={item.total}
-                />
-                <ListItem.Content>
-                    <ListItem.Title>{item.nameBuilding}</ListItem.Title>
-                    <ListItem.Subtitle>{item.time}</ListItem.Subtitle>
-                </ListItem.Content>  
-                {(item.isOnBuilding==1) &&
-                    <Icon style={{ marginRight: '5%', color: '#0000FF' }} name={'truck'} size={20} />             
+                    />
+                    <ListItem.Content style={{marginLeft:15}}>
+                        <ListItem.Title><Text style={(index==0 && item.time!=null)?{fontWeight: 'bold', fontSize:20}:{}}>{item.nameBuilding}</Text></ListItem.Title>
+                        <ListItem.Subtitle>{item.time}{item.time!=null?' minutos':''}</ListItem.Subtitle>                        
+                    </ListItem.Content>  
+                    {(item.isOnBuilding==1) &&
+                        <Icon style={{ marginRight: '5%', color: '#0000FF' }} name={'truck'} size={20} />             
+                    }
+                    {(item.isOperator==1) &&
+                        <Icon style={{ marginRight: '5%', color: '#FF0000' }} name={'truck'} size={20} />             
+                    }
+                    </>
                 }
-                {(item.isOperator==1) &&
-                    <Icon style={{ marginRight: '5%', color: '#FF0000' }} name={'truck'} size={20} />             
-                }
-
-            </ListItem>
+                isExpanded = {true}
+                > 
+                {item.v2plant.map((l, i) => (              
+                <ListItem key={i}
+                    containerStyle={{backgroundColor:"rgba(24, 30, 51,0.2)"}}
+                >
+                    <ListItem.Content>
+                        {/* <ListItem.Title>{l.idTruck}</ListItem.Title> */}
+                        {/* <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle> */}
+                    </ListItem.Content>
+                    <Text>{l.idTruck}</Text>
+                </ListItem>
+                ))}  
+                {item.vInplant.map((l, i) => (              
+                <ListItem key={i}
+                    containerStyle={l.good==1?{backgroundColor:"rgba(0, 255, 0,0.5)"}:{backgroundColor:"rgba(255, 0, 0,0.5)"}}
+                >
+                    <ListItem.Content>
+                        {/* <ListItem.Title>{l.idTruck}</ListItem.Title>                         */}
+                        {/* <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle> */}
+                    </ListItem.Content>
+                    <Text>{l.idTruck}</Text>
+                </ListItem>
+                ))}
+            </ListItem.Accordion>
         );
     }
 
@@ -115,7 +142,7 @@ const Materials = ({ navigation, route }) => {
 
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        // <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={{ flex: 1 }}>
                 <ImageBackground onLoadEnd={loadComponents} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignSelf: 'stretch', backgroundColor: 'transparent', height: "35%" }} source={require('../assets/imgs/bg.jpg')}>
                     <Spinner visible={isSearch} />
@@ -155,7 +182,7 @@ const Materials = ({ navigation, route }) => {
                     </Animated.View>
                 </ImageBackground>
             </View>
-        </TouchableWithoutFeedback>
+        // </TouchableWithoutFeedback>
     );
 
 }

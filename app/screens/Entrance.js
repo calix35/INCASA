@@ -170,6 +170,19 @@ const Entrance = ({ navigation, route }) => {
         }
     }
 
+    const AsyncAlertSalida = () => {
+        return new Promise((resolve, reject) => {
+            Alert.alert(
+                'Retirar GPS!',
+                'FAVOR DE RETIRAR GPS.',
+                [
+                    { text: 'OK', onPress: () => resolve('YES') }
+                ],
+                { cancelable: false }
+            )
+        })
+    }
+
     const AsyncAlert = () => {
         return new Promise((resolve, reject) => {
             Alert.alert(
@@ -197,7 +210,7 @@ const Entrance = ({ navigation, route }) => {
     }
 
     async function saveExit() {
-        setIsSearch(true);
+        //setIsSearch(true);
         existError = false;
         if (plate == '') {
             setErrorPlate("Debe ingresar la placa del camión");
@@ -206,6 +219,7 @@ const Entrance = ({ navigation, route }) => {
         if (!existError) {
             /* Enviar a guardar la hora */
             try {
+                await AsyncAlertSalida();
                 let response = await api.saveExit({ idLog });
                 await AsyncAlert();
                 //Enviar a ...

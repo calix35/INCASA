@@ -24,7 +24,6 @@ export async function login(data) {
 export async function isLeavingTruck(data) {
     try {
         let res = await axios.post(c.IS_LEAVING_TRUCK, data);
-        console.log(res.data);
         return res.data;        
     } catch (e) {
         throw handler(e);
@@ -43,7 +42,7 @@ export async function getAvailableMaterials() {
 export async function getAttendancePriority() {    
     try {
         let res = await axios.post(c.GET_ATTENDANCE_PRIORITY);
-        console.log("OK");
+        console.log("Attendance");
         console.log(res.data);
         return res.data;        
     } catch (e) {
