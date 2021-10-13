@@ -17,6 +17,7 @@ const Tab = createBottomTabNavigator();
 import Arrivals from "./arrivals";
 //import Register from "./register";
 import Materials from "../screens/Materials";
+import Gps from "../screens/Gps";
 import SignOut from "../screens/SignOut"
 
 
@@ -52,6 +53,8 @@ const Home = ({ navigation }) => {
           iconName = focused ? 'truck' : 'truck';
         } else if (route.name === 'Materiales') {
           iconName = focused ? 'home' : 'home';
+        } else if (route.name === 'GPS') {
+          iconName = focused ? 'battery' : 'battery';
         } else if (route.name === 'Cerrar Sesión') {
           iconName = focused ? 'sign-out' : 'sign-out';
           color = 'tomato';
@@ -88,6 +91,7 @@ const Home = ({ navigation }) => {
       */}
       {/* <Tab.Screen name="Incidencias" component={Incidents} /> */}
       <Tab.Screen name="Materiales" component={Materials} />
+      <Tab.Screen name="GPS" component={Gps} />
       <Tab.Screen  name="Cerrar Sesión"
          options={{
          tabBarLabel: ({ color, size }) => {return <Text style={{ color: 'tomato', marginBottom: (witdh<500)?1.5:0 ,fontSize: (witdh<500)?11:12, textAlign:"center", marginLeft:(witdh<500)?0:20}}>Cerrar Sesión</Text>},

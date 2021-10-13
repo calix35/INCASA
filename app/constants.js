@@ -7,6 +7,7 @@ export const API_URL = 'https://incasapac.com/api';
 export const LOGIN = `${API_URL}/login`; // Login usuario
 export const IS_LEAVING_TRUCK = `${API_URL}/isLeavingTruck`; //Buscar si hay un vehiculo saliendo
 export const GET_AVAILABLE_MATERIALS = `${API_URL}/getAvailableMaterials`; //Obtener los materiales disponibles en una pedrera
+export const GET_GPS = `${API_URL}/getGPS`; //Obtener los materiales disponibles en una pedrera
 export const EXIST_GPS = `${API_URL}/existGPS`; //Obtener los materiales disponibles en una pedrera
 export const REGISTER_ARRAIVAL = `${API_URL}/registerArraival`; //Registrar llegada de un vehiculo
 export const SAVE_EXIT = `${API_URL}/saveExit`; //Registrar salida de vehiculo

@@ -30,6 +30,16 @@ export async function isLeavingTruck(data) {
     }
 }
 
+export async function getGPS() {    
+    try {
+        let res = await axios.post(c.GET_GPS);
+        console.log(res.data);
+        return res.data;        
+    } catch (e) {
+        throw handler(e);
+    }
+}
+
 export async function getAvailableMaterials() {    
     try {
         let res = await axios.post(c.GET_AVAILABLE_MATERIALS);
