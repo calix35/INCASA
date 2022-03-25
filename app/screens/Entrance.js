@@ -5,7 +5,7 @@ import { CommonActions } from '@react-navigation/native';
 
 import StyleSheet from 'react-native-media-query';
 
-import { TouchableOpacity, Alert, Animated, View, Dimensions, ImageBackground, KeyboardAvoidingView, SafeAreaView, FlatList, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { TouchableOpacity, Alert, Animated, View, Dimensions, ImageBackground, KeyboardAvoidingView, SafeAreaView, FlatList, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native'
 //import React Native basic components
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -44,6 +44,7 @@ const Entrance = ({ navigation, route }) => {
     const [plate, setPlate] = React.useState('');
     const [driverName, setDriverName] = React.useState('');
     const [GPS, setGPS] = React.useState('');
+    const [mica, setMica] = React.useState('');
     const [companyName, setCompanyName] = React.useState('');
     const [bedColor, setBedColor] = React.useState('');
     const [truckColor, setTruckColor] = React.useState('');
@@ -79,7 +80,7 @@ const Entrance = ({ navigation, route }) => {
         setIsSearch(true);
         try {
             response = await api.getDrivers();
-            console.log(response);
+            //console.log(response);
             setNamesList(response.drivers);
             setCompaniesList(response.companies);
             setIsSearch(false);
@@ -236,7 +237,7 @@ const Entrance = ({ navigation, route }) => {
     async function goTo(idMaterial) {
         setIsSearch(true);
         try {
-            let response = await api.registerArrival({ plate, idMaterial, driverName, companyName, GPS })
+            let response = await api.registerArrival({ plate, idMaterial, driverName, companyName, GPS, mica })
             setIsSearch(false);
             await AsyncAlertEntrada();
             navigation.dispatch(CommonActions.reset({ index: 0, routes: [{ name: 'Entradas' }], }));
@@ -358,18 +359,19 @@ const Entrance = ({ navigation, route }) => {
                                                 <>                                                    
                                                             <View style={[styles.autocompleteContainer1, {width: "100%"}]}>
                                                                 <Text style={{lineHeight:40, paddingHorizontal: 10, bottom:30, fontSize:16, color:"#86939e", fontWeight:"bold"}}>Nombre Conductor</Text>
-                                                                <Autocomplete                                                                               onFocus={()=>{console.log("Focus");}}           
+                                                                <Autocomplete                                                                                          
                                                                     containerStyle={{width:"100%", paddingHorizontal:10, position: 'absolute', zIndex:2}}
                                                                     disabled={BtnSaveExit}
                                                                     onBlur={() => {setFilteredNames([]); (driverName == '') ? setErrorDriver("El nombre del conductor no puede estar vacio") : setErrorDriver("") }}
                                                                     //ref={ref => { drivert = ref; }} 
                                                                     returnKeyType="next"                                                                    
                                                                     onSubmitEditing={() => {setFilteredNames([]);/*companyt.focus();*/}}
+                                                                    // renderTextInput={ () => (<TextInput style={{color:"blue"}}/>) }
                                                                     inputContainerStyle={styles.autoCompleteInput}
                                                                     data={filteredNames}
                                                                     placeholder={"Nombre Conductor"}  
                                                                     placeholderTextColor="#86939e"
-                                                                    style={{fontSize: 18}}
+                                                                    style={{fontSize: 18, color:"black"}}
                                                                     onChangeText={(text) => findName(text)}
                                                                     value={driverName}
                                                                     flatListProps={{
@@ -397,12 +399,12 @@ const Entrance = ({ navigation, route }) => {
                                                                     onBlur={() => {setFilteredCompanies([]); (companyName == '') ? setErrorCompany("El nombre de la compañia fletera no puede estar vacio") : setErrorCompany("") }}
                                                                     //ref={ref => { companyt = ref; }}
                                                                     returnKeyType="next" 
-                                                                    onSubmitEditing={() => {setFilteredCompanies([]);gpst.focus();}}
+                                                                    onSubmitEditing={() => {setFilteredCompanies([]);}}
                                                                     inputContainerStyle={styles.autoCompleteInput}
                                                                     data={filteredCompanies}
                                                                     placeholder={"Empresa fletera"}  
                                                                     placeholderTextColor="#86939e"
-                                                                    style={{fontSize: 18}}
+                                                                    style={{fontSize: 18, color:"black"}}
                                                                     onChangeText={(text) => findCompany(text)}
                                                                     value={companyName}
                                                                     
@@ -425,7 +427,8 @@ const Entrance = ({ navigation, route }) => {
                                                             </View>                                                            
                                                     {/* <Input disabled={BtnSaveExit} value={driverName} onBlur={() => { (driverName == '') ? setErrorDriver("El nombre del conductor no puede estar vacio") : setErrorDriver("") }} errorMessage={errorDriver} ref={ref => { drivert = ref; }} returnKeyType="next" onSubmitEditing={() => companyt.focus()} placeholder='Conductor' onChangeText={setDriverName} label="Conductor" /> */}
                                                     {/* <Input disabled={BtnSaveExit} value={companyName} onBlur={() => { (companyName == '') ? setErrorCompany("El nombre de la compañia fletera no puede estar vacio") : setErrorCompany("") }} errorMessage={errorCompany} ref={ref => { companyt = ref; }} returnKeyType="next" placeholder='Empresa fletera' onChangeText={setCompanyName} label="Empresa fletera"  onSubmitEditing={() => gpst.focus()}/> */}
-                                                    <Input disabled={BtnSaveExit} value={GPS} onBlur={() => { searchGPS() }} errorMessage={errorGPS} returnKeyType="done" onSubmitEditing={() => chooseMaterial()} placeholder='GPS' onChangeText={setGPS} label="GPS" />
+                                                    <Input disabled={BtnSaveExit} value={mica} returnKeyType="next"  placeholder='Mica' onChangeText={setMica} label="Mica" />
+                                                    <Input  disabled={BtnSaveExit} value={GPS} onBlur={() => { searchGPS() }} errorMessage={errorGPS} returnKeyType="done" onSubmitEditing={() => chooseMaterial()} placeholder='GPS' onChangeText={setGPS} label="GPS" />                                                    
                                                     <Button icon={<Icon name={BtnSaveExit==false?"arrow-right":"save"} color={"white"} size={17}></Icon>} title={BtnSaveExit==false?"Siguiente   ":"Guardar   "} iconRight onPress={() => { BtnSaveExit==false?chooseMaterial():saveExit() }} />
                                                 </>
                                             }
@@ -480,7 +483,7 @@ const {ids, styles} = StyleSheet.create({
     autoCompleteInput: {
         borderWidth: 0, 
         borderBottomWidth: 1,
-        borderColor: "#86939e",
+        borderColor: "#86939e",        
         //paddingHorizontal: 10
     },
     listAutoComplete:{
